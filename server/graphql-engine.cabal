@@ -1,0 +1,284 @@
+name:                graphql-engine
+version:             1.0.0
+synopsis:            GraphQL API over Postgres
+-- description:
+homepage:            https://www.hasura.io
+license:             AGPL-3.0
+-- license-file:        LICENSE.md
+author:              Vamshi Surabhi
+maintainer:          vamshi@hasura.io
+copyright:           2017-2018 Hasura Techonologies Pvt. Ltd
+category:            Database
+build-type:          Simple
+-- extra-source-files:  README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:     git
+  location: https://github.com/hasura/graphql-engine
+
+flag developer
+  description: operate in developer mode
+  default: False
+  manual: True
+
+library
+  default-extensions:  NoImplicitPrelude
+  hs-source-dirs:      src-lib
+                     , src-exec
+  default-language:    Haskell2010
+  build-depends:       base
+                     , pg-client
+                     , text
+                     , text-builder >= 0.6
+                     , bytestring
+                     , postgresql-libpq
+                     , mtl
+                     , aeson
+                     , aeson-casing
+                     , unordered-containers
+                     , template-haskell
+                     , hashable
+                     , transformers
+                     , transformers-base
+                     , http-types
+                     , attoparsec
+                     , attoparsec-iso8601 >= 1.0
+                     , time
+                     , scientific
+                     , Spock-core
+                     , split
+                     , optparse-applicative
+                     , wai-extra
+                     , containers
+                     , monad-control
+                     , monad-time
+                     , wai-logger
+                     , fast-logger
+                     , wai
+                     , postgresql-binary
+                     , process
+
+                     -- Encoder related
+                     , uuid
+                     , vector
+
+                     -- Logging related
+                     , network
+                     , byteorder
+
+                     -- hashing for logging
+                     , cryptonite
+                     -- for jwt verification
+                     , jose
+                     , pem
+                     , x509
+                     , asn1-encoding
+                     , asn1-types
+
+                     -- Server related
+                     , warp
+                     , th-lift-instances
+                     , lens
+
+                     -- GraphQL related
+                     , graphql-parser
+                     , wai-middleware-static
+
+                     -- URL parser related
+                     , network-uri
+
+                     -- String related
+                     , case-insensitive
+                     , string-conversions
+
+                     -- Http client
+                     , wreq
+                     , http-client
+                     , http-client-tls
+                     , connection
+                     , retry
+
+                     -- ordered map
+                     , insert-ordered-containers
+
+                     -- Parsing SemVer
+                     , semver
+
+                     -- Templating
+                     , mustache
+                     , ginger
+                     , file-embed
+
+                     --
+                     , data-has
+                     -- for src-exec
+                     , yaml
+                     , template-haskell >= 2.11
+
+                     -- websockets interface related
+                     , websockets
+                     , wai-websockets
+                     , hashtables
+                     , stm
+                     , stm-containers
+                     , list-t
+                     , async
+
+                     -- logging related
+                     , base64-bytestring >= 1.0
+                     , auto-update
+
+                     -- regex related
+                     , regex-compat
+
+  exposed-modules:     Hasura.Server.App
+                     , Hasura.Server.Auth
+                     , Hasura.Server.Auth.JWT
+                     , Hasura.Server.Init
+                     , Hasura.Server.Middleware
+                     , Hasura.Server.Logging
+                     , Hasura.Server.Query
+                     , Hasura.Server.Utils
+                     , Hasura.Server.Version
+                     , Hasura.Server.CheckUpdates
+                     , Hasura.RQL.Types
+                     , Hasura.RQL.Instances
+                     , Hasura.RQL.Types.SchemaCache
+                     , Hasura.RQL.Types.Common
+                     , Hasura.RQL.Types.Permission
+                     , Hasura.RQL.Types.Error
+                     , Hasura.RQL.Types.DML
+                     , Hasura.RQL.Types.Subscribe
+                     , Hasura.RQL.DDL.Deps
+                     , Hasura.RQL.DDL.Permission.Internal
+                     , Hasura.RQL.DDL.Permission.Triggers
+                     , Hasura.RQL.DDL.Permission
+                     , Hasura.RQL.DDL.Relationship
+                     , Hasura.RQL.DDL.QueryTemplate
+                     , Hasura.RQL.DDL.Schema.Table
+                     , Hasura.RQL.DDL.Schema.Diff
+                     , Hasura.RQL.DDL.Metadata
+                     , Hasura.RQL.DDL.Utils
+                     , Hasura.RQL.DDL.Subscribe
+                     , Hasura.RQL.DML.Delete
+                     , Hasura.RQL.DML.Internal
+                     , Hasura.RQL.DML.Insert
+                     , Hasura.RQL.DML.Returning
+                     , Hasura.RQL.DML.Select
+                     , Hasura.RQL.DML.Update
+                     , Hasura.RQL.DML.Count
+                     , Hasura.RQL.DML.QueryTemplate
+                     , Hasura.RQL.GBoolExp
+
+                     , Hasura.GraphQL.Transport.HTTP.Protocol
+                     , Hasura.GraphQL.Transport.HTTP
+                     , Hasura.GraphQL.Transport.WebSocket.Protocol
+                     , Hasura.GraphQL.Transport.WebSocket.Server
+                     , Hasura.GraphQL.Transport.WebSocket
+                     , Hasura.GraphQL.Schema
+                     , Hasura.GraphQL.Utils
+                     , Hasura.GraphQL.Validate
+                     , Hasura.GraphQL.Validate.Types
+                     , Hasura.GraphQL.Validate.Context
+                     , Hasura.GraphQL.Validate.Field
+                     , Hasura.GraphQL.Validate.InputValue
+                     , Hasura.GraphQL.Resolve
+                     , Hasura.GraphQL.Explain
+                     , Hasura.GraphQL.Resolve.LiveQuery
+                     , Hasura.GraphQL.Resolve.BoolExp
+                     , Hasura.GraphQL.Resolve.Context
+                     , Hasura.GraphQL.Resolve.InputValue
+                     , Hasura.GraphQL.Resolve.Introspect
+                     , Hasura.GraphQL.Resolve.Insert
+                     , Hasura.GraphQL.Resolve.Mutation
+                     , Hasura.GraphQL.Resolve.Select
+
+                     , Hasura.Events.Lib
+                     , Hasura.Events.HTTP
+
+                     , Data.Text.Extended
+                     , Data.Sequence.NonEmpty
+                     , Data.TByteString
+                     , Data.HashMap.Strict.InsOrd.Extended
+
+                     , Hasura.SQL.DML
+                     , Hasura.SQL.Types
+                     , Hasura.SQL.Value
+                     , Hasura.SQL.GeoJSON
+                     , Hasura.SQL.Time
+                     , Hasura.SQL.Rewrite
+                     , Hasura.Prelude
+                     , Hasura.Logging
+                     , Ops
+                     , TH
+
+  other-modules:       Hasura.Server.Auth.JWT.Internal
+                     , Hasura.Server.Auth.JWT.Logging
+
+
+  if flag(developer)
+    ghc-prof-options: -rtsopts -fprof-auto -fno-prof-count-entries
+
+  ghc-options: -O2 -Wall
+
+executable graphql-engine
+  default-extensions:  NoImplicitPrelude
+  main-is:           Main.hs
+  default-language:  Haskell2010
+  hs-source-dirs:    src-exec
+  build-depends:       base
+                     , warp >= 3.2
+                     , graphql-engine
+                     , aeson >= 1.0
+                     , bytestring >= 0.10
+                     , mtl
+                     , optparse-applicative >= 0.12
+                     , yaml
+                     , template-haskell >= 2.11 , time >= 1.6
+                     , text
+                     , lens
+                     , unordered-containers >= 0.2
+                     , pg-client
+                     , http-client
+                     , http-client-tls
+                     , stm
+                     , wreq
+                     , connection
+                     , string-conversions
+
+  other-modules:     Ops
+                     TH
+
+  if flag(developer)
+    ghc-prof-options: -rtsopts -fprof-auto -fno-prof-count-entries
+
+  ghc-options: -O2 -Wall -threaded
+
+test-suite graphql-engine-test
+  type:               exitcode-stdio-1.0
+  main-is:            Main.hs
+  Default-Language:   Haskell2010
+  Hs-Source-Dirs:     test
+  ghc-options:        -O2 -Wall
+  Build-Depends:       Spock-core >= 0.11
+                     , base
+                     , aeson
+                     , aeson-casing
+                     , bytestring
+                     , hspec
+                     , hspec-core
+                     , hspec-wai
+                     , optparse-applicative
+                     , graphql-engine -any
+                     , text
+                     , wai
+                     , pg-client
+                     , time
+                     , yaml
+                     , http-client
+                     , http-client-tls
+                     , unordered-containers >= 0.2
+                     , case-insensitive
+
+  other-modules:     Spec

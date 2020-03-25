@@ -1,0 +1,10 @@
+*.md
+LICENSE
+scripts/*
+assets/*
+docs/*
+community/*
+install-manifests/*
+.ciignore
+.gitignore
+.github/*
